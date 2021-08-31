@@ -1,0 +1,360 @@
+$primary-color: #fb5533;
+
+.main {
+    [data-sort] {
+        cursor: pointer;
+        user-select: none;
+    }
+    .highlight {
+        color: $primary-color !important;
+    }
+    .header {
+        position: relative;
+    }
+    .container {
+        display: flex;
+        justify-content: center;
+        &__search {
+            width: 1200px;
+            display: flex;
+            margin-top: 25px;
+            .search {
+                &-filter {
+                    flex: 1;
+                    .filter {
+                        &-title {
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                            color: #565656;
+                            margin-bottom: 15px;
+                            i {
+                                font-size: 1.25rem;
+                                margin-right: 5px;
+                            }
+                        }
+                        &-list {
+                            .filter-group {
+                                padding: 20px 0;
+                                margin-right: 20px;
+                                border-bottom: 1px solid #dedede;
+                                .list-name {
+                                    display: flex;
+                                    justify-content: space-between;
+                                    font-size: 1.3rem;
+                                    margin-bottom: 15px;
+                                    color: #333;
+                                    .list-more {
+                                        cursor: pointer;
+                                        i {
+                                            margin-left: 5px;
+                                        }
+                                    }
+                                }
+                                .list-items {
+                                    overflow: hidden;
+                                    transition: all 0.3s;
+                                    .filters {
+                                        i {
+                                            margin-right: 10px;
+                                            font-size: 1.2rem;
+                                        }
+                                        .hide,
+                                        input {
+                                            display: none;
+                                        }
+                                        label {
+                                            display: flex;
+                                            font-size: 1.2rem;
+                                            line-height: 1.4rem;
+                                            color: #565656;
+                                            word-break: break-word;
+                                            user-select: none;
+                                            cursor: pointer;
+                                            .check {
+                                                color: $primary-color;
+                                            }
+                                        }
+                                        &:not(:last-child) {
+                                            margin-bottom: 10px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                &-results {
+                    display: flex;
+                    flex: 4.5;
+                    align-items: center;
+                    flex-direction: column;
+                    transition: all 0.3s;
+                    .results {
+                        &-title {
+                            width: 100%;
+                            display: flex;
+                            align-items: center;
+                            color: #333;
+                            i {
+                                font-size: 1.7rem;
+                                margin-right: 10px;
+                            }
+                            .text {
+                                font-size: 1.4rem;
+                                span {
+                                    font-size: 1.4rem;
+                                }
+                            }
+                        }
+                        &-bar {
+                            display: flex;
+                            width: 100%;
+                            justify-content: space-between;
+                            align-items: center;
+                            padding: 10px 25px;
+                            background: #ededed;
+                            margin: 25px 0;
+                            .bar {
+                                &-sort {
+                                    display: flex;
+                                    align-items: center;
+                                    span {
+                                        font-size: 1.25rem;
+                                        margin-right: 10px;
+                                        color: #333;
+                                    }
+                                    .sort {
+                                        padding: 10px 15px;
+                                        background: #fff;
+                                        margin: 0 5px;
+                                        border-radius: 3px;
+                                        font-size: 1.25rem;
+                                        transition: all 0.3s;
+                                        &-price {
+                                            position: relative;
+                                            width: 200px;
+                                            display: flex;
+                                            justify-content: space-between;
+                                            .price {
+                                                display: none;
+                                                width: 200px;
+                                                left: -5px;
+                                            }
+                                            .wrapper {
+                                                position: absolute;
+                                                left: -10px;
+                                                bottom: -80px;
+                                                padding: 5px;
+                                                z-index: 1;
+                                                .lowest-price {
+                                                    &:hover {
+                                                        color: $primary-color;
+                                                    }
+                                                }
+                                                .highest-price {
+                                                    &:hover {
+                                                        color: $primary-color;
+                                                    }
+                                                }
+                                            }
+                                            &:hover .price {
+                                                display: flex;
+                                                justify-content: space-between;
+                                            }
+                                        }
+                                        &:hover:not(.sort-price) {
+                                            color: $primary-color;
+                                        }
+                                        &.active {
+                                            background: $primary-color;
+                                            color: #fff;
+                                            &:hover {
+                                                color: #fff;
+                                            }
+                                        }
+                                    }
+                                }
+                                &-nav {
+                                    display: flex;
+                                    .pages {
+                                        display: flex;
+                                        align-items: center;
+                                        margin-right: 20px;
+                                        font-size: 1.25rem;
+                                        span {
+                                            font-size: 1.25rem;
+                                        }
+                                    }
+                                    .nav {
+                                        padding: 10px 15px;
+                                        background: #fff;
+                                        margin: 0.5px;
+                                        &.inactive {
+                                            opacity: 0.5;
+                                        }
+                                        i {
+                                            font-size: 0.9rem;
+                                        }
+                                        &:hover:not(.inactive) {
+                                            opacity: 0.75;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        &-list {
+                            display: flex;
+                            flex-wrap: wrap;
+                            justify-content: space-around;
+                            align-items: center;
+                            min-height: 300px;
+                            width: 100%;
+                            .preload {
+                                height: 100px;
+                            }
+                            .item-wrapper {
+                                width: calc(95% / 5);
+                                background: #fff;
+                                margin: 5px 0;
+                                box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+                                min-height: 300px;
+                                .item {
+                                    background: #fff;
+                                    margin: 1px;
+                                    position: relative;
+                                    cursor: pointer;
+                                    &__discount {
+                                        position: absolute;
+                                        right: 0;
+                                        top: 0;
+                                        display: flex;
+                                        flex-direction: column;
+                                        padding: 5px;
+                                        width: 38px;
+                                        background: #ffd839;
+                                        text-align: center;
+                                        span {
+                                            font-size: 0.9rem;
+                                        }
+                                        .number {
+                                            color: $primary-color;
+                                        }
+                                        .text {
+                                            color: #fff;
+                                        }
+                                        &::after {
+                                            content: "";
+                                            display: block;
+                                            position: absolute;
+                                            bottom: -5px;
+                                            left: 0;
+                                            border-color: transparent #ffd839;
+                                            border-style: solid;
+                                            border-width: 0 19px 5px;
+                                        }
+                                    }
+                                    &__image {
+                                        width: 100%;
+                                        height: 190px;
+                                        display: block;
+                                    }
+                                    &__name {
+                                        height: 40px;
+                                        padding: 10px;
+                                        span {
+                                            word-break: break-word;
+                                            display: -webkit-box;
+                                            text-overflow: ellipsis;
+                                            -webkit-box-orient: vertical;
+                                            -webkit-line-clamp: 2;
+                                            max-width: 160px;
+                                            overflow: hidden;
+                                            font-size: 1.2rem;
+                                            color: #333;
+                                        }
+                                    }
+                                    &__price {
+                                        font-size: 1.3rem;
+                                        color: $primary-color;
+                                        display: flex;
+                                        align-items: center;
+                                        padding: 10px 5px;
+                                        .price-before-discount {
+                                            font-size: 1.2rem;
+                                            text-decoration: line-through;
+                                            color: #bdbdbd;
+                                        }
+                                        .currency {
+                                            font-size: 0.8rem;
+                                            text-decoration: underline;
+                                            margin-right: 2px;
+                                            margin-left: 5px;
+                                        }
+                                    }
+                                    &__stat {
+                                        display: flex;
+                                        justify-content: space-between;
+                                        align-items: center;
+                                        padding: 0 10px;
+                                        .wrapper {
+                                            display: flex;
+                                            .rating {
+                                                display: flex;
+                                                margin-right: 5px;
+                                                .star {
+                                                    position: relative;
+                                                    color: #d5d5d5;
+                                                    i {
+                                                        font-size: 0.7rem;
+                                                    }
+                                                    .rate {
+                                                        position: absolute;
+                                                        left: 0;
+                                                        bottom: 1px;
+                                                        overflow: hidden;
+                                                        color: #ffce3d;
+                                                    }
+                                                }
+                                            }
+                                            .sold {
+                                                color: #333;
+                                                font-size: 1rem;
+                                            }
+                                        }
+                                    }
+                                    &__location {
+                                        display: flex;
+                                        justify-content: flex-end;
+                                        color: #797979;
+                                        padding: 5px 10px 10px;
+                                        font-size: 1rem;
+                                    }
+                                    &__relative {
+                                        position: absolute;
+                                        width: calc(100% + 2px);
+                                        margin-left: -1px;
+                                        z-index: 1;
+                                        padding: 10px;
+                                        display: flex;
+                                        justify-content: center;
+                                        background: $primary-color;
+                                        color: #fff;
+                                        font-size: 1.2rem;
+                                        text-align: center;
+                                    }
+                                    &:hover {
+                                        border: 1px solid $primary-color;
+                                        margin: 0;
+                                        .item__relative {
+                                            display: block !important;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

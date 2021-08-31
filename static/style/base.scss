@@ -16,6 +16,9 @@ $primary-color: #fb5533;
         user-select: none;
         color: transparent;
     }
+    [data-link] {
+        cursor: pointer;
+    }
 }
 .main {
     background: #f5f5f5;
@@ -229,6 +232,7 @@ $primary-color: #fb5533;
                                 justify-content: center;
                                 padding: 10px 0;
                                 border-radius: 3px;
+                                color: #fff;
                                 &:hover {
                                     opacity: 0.8;
                                 }
@@ -245,19 +249,18 @@ $primary-color: #fb5533;
                                 left: 0;
                                 box-shadow: 0px 0px 2px #333;
                                 border-radius: 2px;
+                                z-index: 100;
                                 .search-result {
                                     height: 40px;
                                     display: flex;
                                     align-items: center;
                                     padding: 10px;
+                                    font-size: 1.15rem;
+                                    color: #333;
                                     svg {
                                         fill: $primary-color;
                                         height: 90%;
                                         margin-right: 1%;
-                                    }
-                                    span {
-                                        font-size: 1.15rem;
-                                        color: #333;
                                     }
                                     &.default {
                                         justify-content: space-between;
@@ -386,12 +389,7 @@ $primary-color: #fb5533;
                                         .dot {
                                             width: 10px;
                                             height: 10px;
-                                            background: rgba(
-                                                255,
-                                                255,
-                                                255,
-                                                0.5
-                                            );
+                                            background: rgba(255, 255, 255, 0.5);
                                             box-shadow: 0 0 5px #333;
                                             border-radius: 50%;
                                             transition: all 0.3s;
@@ -504,8 +502,7 @@ $primary-color: #fb5533;
                                             display: flex;
                                             flex-direction: column;
                                             align-items: center;
-                                            box-shadow: 0 0 1px
-                                                rgba(0, 0, 0, 0.3);
+                                            box-shadow: 0 0 1px rgba(0, 0, 0, 0.3);
                                             cursor: pointer;
                                             &-image {
                                                 background-size: contain !important;
@@ -528,14 +525,8 @@ $primary-color: #fb5533;
                                             }
                                             &:hover {
                                                 transform: translateZ(0);
-                                                border-color: rgba(
-                                                    0,
-                                                    0,
-                                                    0,
-                                                    0.12
-                                                );
-                                                box-shadow: 0 0 0.8125rem 0
-                                                    rgba(0, 0, 0, 0.1);
+                                                border-color: rgba(0, 0, 0, 0.12);
+                                                box-shadow: 0 0 0.8125rem 0 rgba(0, 0, 0, 0.1);
                                             }
                                         }
                                     }
@@ -559,21 +550,17 @@ $primary-color: #fb5533;
                                     }
                                     &.prev {
                                         left: 0;
-                                        transform: translateX(-50%)
-                                            translateY(-50%);
+                                        transform: translateX(-50%) translateY(-50%);
                                         &:hover {
-                                            transform: scale(1.7)
-                                                translateX(calc(-50% / 1.7))
+                                            transform: scale(1.7) translateX(calc(-50% / 1.7))
                                                 translateY(calc(-50% / 1.7));
                                         }
                                     }
                                     &.next {
                                         right: 0;
-                                        transform: translateX(50%)
-                                            translateY(-50%);
+                                        transform: translateX(50%) translateY(-50%);
                                         &:hover {
-                                            transform: scale(1.7)
-                                                translateX(calc(50% / 1.7))
+                                            transform: scale(1.7) translateX(calc(50% / 1.7))
                                                 translateY(calc(-50% / 1.7));
                                         }
                                     }
@@ -630,8 +617,7 @@ $primary-color: #fb5533;
                                                 position: absolute;
                                                 bottom: -6px;
                                                 left: 0;
-                                                border-color: transparent
-                                                    #ffd839;
+                                                border-color: transparent #ffd839;
                                                 border-style: solid;
                                                 border-width: 0 27px 6px;
                                             }
@@ -702,21 +688,17 @@ $primary-color: #fb5533;
                                     }
                                     &.prev {
                                         left: 0;
-                                        transform: translateX(-50%)
-                                            translateY(-50%);
+                                        transform: translateX(-50%) translateY(-50%);
                                         &:hover {
-                                            transform: scale(1.7)
-                                                translateX(calc(-50% / 1.7))
+                                            transform: scale(1.7) translateX(calc(-50% / 1.7))
                                                 translateY(calc(-50% / 1.7));
                                         }
                                     }
                                     &.next {
                                         right: 0;
-                                        transform: translateX(50%)
-                                            translateY(-50%);
+                                        transform: translateX(50%) translateY(-50%);
                                         &:hover {
-                                            transform: scale(1.7)
-                                                translateX(calc(50% / 1.7))
+                                            transform: scale(1.7) translateX(calc(50% / 1.7))
                                                 translateY(calc(-50% / 1.7));
                                         }
                                     }
@@ -774,7 +756,7 @@ $primary-color: #fb5533;
                             padding: 0;
                             position: sticky;
                             top: 126px;
-                            z-index: 100;
+                            z-index: 10;
                             .category {
                                 display: flex;
                                 justify-content: center;
@@ -843,8 +825,7 @@ $primary-color: #fb5533;
                                                     position: absolute;
                                                     bottom: -5px;
                                                     left: 0;
-                                                    border-color: transparent
-                                                        #ffd839;
+                                                    border-color: transparent #ffd839;
                                                     border-style: solid;
                                                     border-width: 0 19px 5px;
                                                 }
