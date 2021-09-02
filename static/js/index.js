@@ -6,6 +6,8 @@ import Signup from "./views/Signup.js";
 import SignupScript from "./scripts/Signup.script.js";
 import Search from "./views/Search.js";
 import SearchScript from "./scripts/Search.script.js";
+import Product from "./views/Product.js";
+import ProductScript from "./scripts/Product.script.js";
 
 const navigateTo = url => {
     history.pushState(null, null, url);
@@ -18,6 +20,7 @@ const router = async () => {
         { path: "/login", view: Login, script: LoginScript },
         { path: "/signup", view: Signup, script: SignupScript },
         { path: "/search", view: Search, script: SearchScript },
+        { path: "/product", view: Product, script: ProductScript },
     ];
 
     const page = routes.find(route => location.pathname == route.path) || routes[0];
@@ -27,9 +30,14 @@ const router = async () => {
     script.main();
     document.addEventListener("DOMContentLoaded", () => {
         document.body.addEventListener("click", e => {
-            e.preventDefault();
-            if (e.target.matches("[data-link]")) {
-                navigateTo(e.target.href ?? location.origin + e.target.getAttribute("href"));
+            if (e.target.matches("[data-link]") || e.target.parentNode.matches("[data-link]")) {
+                e.preventDefault();
+                navigateTo(
+                    e.target.href ??
+                        location.origin +
+                            (e.target.getAttribute("href") ??
+                                e.target.parentNode.getAttribute("href"))
+                );
             }
         });
     });

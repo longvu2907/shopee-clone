@@ -1,9 +1,8 @@
+import ApiKeys from "../api/apiKeys.js";
+
 export default class {
     constructor(params) {
-        this.listApiKey = [
-            "0e4475fd55msh9d3f485c76f18e1p1e3898jsn5c204e872e81",
-            "04ea227f6emsh94b332b0ad73072p1df912jsnfa734bf2814b",
-        ];
+        this.listApiKey = ApiKeys;
         this.indexApiKey = 0;
         //Slider Flashsale Banner
         this.bannerSlider = document.querySelector(".slider__items .items");
@@ -244,8 +243,12 @@ export default class {
                 .map(
                     item => `
             <a class='item' href="${"./search?" + item.category_display_name}" data-link>
-                <div class="item-image" style='background: url(${item.category_image});'></div>
-                <div class="item-name"><span>${item.category_display_name}</span></div>
+                <div class="item-image" style='background: url(${item.category_image});'href="${
+                        "/search?" + item.category_display_name
+                    }" data-link></div>
+                <div class="item-name"href="${
+                    "/search?" + item.category_display_name
+                }" data-link><span>${item.category_display_name}</span></div>
             </a>`
                 )
                 .join("");
@@ -289,12 +292,20 @@ export default class {
             let html = "";
             for (let i = 0; i < 5; i++) {
                 html += `
-                <div class="item">
-                    <div class='item-stat'>
-                        <span class='name'>${data[i + this.keywordsIndex * 5].keyword}</span>
-                        <span class='count'>${(
-                            data[i + this.keywordsIndex * 5].count / 1000
-                        ).toFixed(0)}k+ sản phẩm</span>
+                <a class="item" href="/search?${
+                    data[i + this.keywordsIndex * 5].keyword
+                }" data-link>
+                    <div class='item-stat' href="/search?${
+                        data[i + this.keywordsIndex * 5].keyword
+                    }" data-link>
+                        <span class='name' href="/search?${
+                            data[i + this.keywordsIndex * 5].keyword
+                        }" data-link>${data[i + this.keywordsIndex * 5].keyword}</span>
+                        <span class='count' href="/search?${
+                            data[i + this.keywordsIndex * 5].keyword
+                        }" data-link>${(data[i + this.keywordsIndex * 5].count / 1000).toFixed(
+                    0
+                )}k+ sản phẩm</span>
                     </div>
                     <img src='${
                         data[i + this.keywordsIndex * 5].images[
@@ -302,8 +313,8 @@ export default class {
                                 Math.random() * data[i + this.keywordsIndex * 5].images.length
                             )
                         ]
-                    }'></img>
-                </div>`;
+                    }' href="/search?${data[i + this.keywordsIndex * 5].keyword}" data-link></img>
+                </a>`;
             }
             this.keywordsList.innerHTML = html;
         }
@@ -330,22 +341,22 @@ export default class {
             this.flashsaleList.innerHTML = data
                 .map(
                     item => `
-                <div class='item'>
-                    <div class="item-discount"><span class="number">${
-                        item.discount
-                    }</span><span class="text">GIẢM</span></div>
-                    <img class='item-image' src='${
-                        item.promo_overlay_image
-                    }' style='background-image: url(${item.image})'></img>
-                    <div class="item-price"><span class="currency">đ</span><span class="price">${new Intl.NumberFormat(
-                        "de-DE"
-                    ).format(item.price)}</span></div>
-                    <div class="item-stock"><span>ĐÃ BÁN ${
-                        item.flash_sale_stock - item.stock
-                    }</span><div class="progress" style="width: ${
+                    <div class='item' href="/product?${item.shop_id}&${item.item_id}" data-link>
+                        <div class="item-discount"><span class="number">${
+                            item.discount
+                        }</span><span class="text">GIẢM</span></div>
+                        <img class='item-image' src='${
+                            item.promo_overlay_image
+                        }' style='background-image: url(${item.image})'></img>
+                        <div class="item-price"><span class="currency">đ</span><span class="price">${new Intl.NumberFormat(
+                            "de-DE"
+                        ).format(item.price)}</span></div>
+                        <div class="item-stock"><span>ĐÃ BÁN ${
+                            item.flash_sale_stock - item.stock
+                        }</span><div class="progress" style="width: ${
                         (item.stock / item.flash_sale_stock) * 100
                     }%"></div></div>
-                </div>`
+                    </div>`
                 )
                 .join("");
             this.flashsaleListPrevArrow.addEventListener("click", e => {
@@ -444,32 +455,34 @@ export default class {
                 this.listProducts.innerHTML += data
                     .map(
                         item => `
-                <div class="item-wrapper">
-                    <div class="item">
-                        <div class="item__discount" style="display:${
-                            item.discount == null ? "none" : "flex"
-                        }"><span class="number">${
+                        <div class="item-wrapper">
+                            <div class="item" href="/product?${item.shop_id}&${
+                            item.item_id
+                        }" data-link>
+                                <div class="item__discount" style="display:${
+                                    item.discount == null ? "none" : "flex"
+                                }"><span class="number">${
                             item.discount
                         }</span><span class="text">GIẢM</span></div>
-                        <img class="item__image" style="background: url(./static/images/preload.gif)" src="${
-                            item.image
-                        }" loading="lazy"></img>
-                        <div class="item__name">
-                            <span>${item.name}</span>
-                        </div>
-                        <div class="item__stat">
-                            <span class="price"><span class="currency">đ</span>${format(
-                                item.price
-                            )}</span>
-                            <span class="sold">Đã bán ${
-                                item.sold < 1000
-                                    ? item.sold
-                                    : format((item.sold / 1000).toFixed(1)) + "k"
-                            }</span>
-                        </div>
-                        <div class="item__relative" style="display: none">Tìm sản phẩm tương tự</div>
-                    </div>
-                </div>`
+                                <img class="item__image" style="background: url(./static/images/preload.gif)" src="${
+                                    item.image
+                                }" loading="lazy"></img>
+                                <div class="item__name">
+                                    <span>${item.name}</span>
+                                </div>
+                                <div class="item__stat">
+                                    <span class="price"><span class="currency">đ</span>${format(
+                                        item.price
+                                    )}</span>
+                                    <span class="sold">Đã bán ${
+                                        item.sold < 1000
+                                            ? item.sold
+                                            : format((item.sold / 1000).toFixed(1)) + "k"
+                                    }</span>
+                                </div>
+                                <div class="item__relative" style="display: none">Tìm sản phẩm tương tự</div>
+                            </div>
+                        </div>`
                     )
                     .join("");
             })
@@ -480,23 +493,32 @@ export default class {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     handleFetchErr(err) {
-        err = err.message;
         console.log(err);
-        if (err.includes("429")) setTimeout(() => this.main(), 2000);
-        else if (err.includes("500")) {
-            this.indexApiKey += 1;
-            setTimeout(() => this.main(), 500);
+        var rerun;
+        err = err.message;
+        if (err.includes("429")) {
+            clearTimeout(rerun);
+            this.changeApiKey();
+            rerun = setTimeout(() => this.main(), 3000);
+        } else if (err.includes("500")) {
+            this.changeApiKey();
+            clearTimeout(rerun);
+            rerun = setTimeout(() => this.main(), 500);
         }
+    }
+    changeApiKey() {
+        this.indexApiKey < this.listApiKey.length - 1 ? this.indexApiKey++ : (this.indexApiKey = 0);
     }
     main() {
         console.log("homepage");
-        let timeout = 1500;
+        let timeout = 0;
         this.sleep(timeout)
             .then(() => {
                 return this.getFlashsale(this.listApiKey[this.indexApiKey])
                     .then(data => {
                         this.currentFlashsale = data.data;
                         this.renderFlashsaleBanner(this.currentFlashsale);
+                        this.changeApiKey();
                         return this.sleep(timeout);
                     })
                     .catch(err => Promise.reject(err));
@@ -506,6 +528,7 @@ export default class {
                     .then(data => {
                         this.mainCategories = data.data.categories;
                         this.renderMainCategories(this.mainCategories);
+                        this.changeApiKey();
                         return this.sleep(timeout);
                     })
                     .catch(err => Promise.reject(err));
@@ -515,6 +538,7 @@ export default class {
                     .then(data => {
                         this.flashsaleItems = data.data.items;
                         this.renderFlashsaleItem(this.flashsaleItems);
+                        this.changeApiKey();
                         return this.sleep(timeout);
                     })
                     .catch(err => Promise.reject(err));
@@ -532,6 +556,7 @@ export default class {
                                     : (this.keywordsIndex += 1);
                             this.renderTrendingKeywords(this.trendingKeywords);
                         });
+                        this.changeApiKey();
                         return this.sleep(timeout);
                     })
                     .catch(err => Promise.reject(err));
@@ -541,6 +566,7 @@ export default class {
                     this.mainCategories,
                     this.listApiKey[this.indexApiKey]
                 );
+                this.changeApiKey();
             })
             .catch(err => this.handleFetchErr(err.toJSON()));
     }

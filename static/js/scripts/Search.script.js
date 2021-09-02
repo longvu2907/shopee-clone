@@ -1,11 +1,10 @@
+import ApiKeys from "../api/apiKeys.js";
+
 export default class {
-    constructor(keywords) {
-        this.listApiKey = [
-            "0e4475fd55msh9d3f485c76f18e1p1e3898jsn5c204e872e81",
-            "04ea227f6emsh94b332b0ad73072p1df912jsnfa734bf2814b",
-        ];
+    constructor(params) {
+        this.listApiKey = ApiKeys;
         this.indexApiKey = 0;
-        this.keywords = keywords;
+        this.keywords = params;
         this.currentPage = 1;
         this.totalPages = 0;
         this.sortBy = "relevancy";
@@ -147,7 +146,7 @@ export default class {
             .map(
                 item => `
                 <div class="item-wrapper">
-                    <div class="item">
+                    <div class="item" href="/product?${item.shop_id}&${item.item_id}" data-link>
                         <div class="item__discount" style="display:${
                             item.discount == null ? "none" : "flex"
                         }"><span class="number">${
@@ -191,8 +190,7 @@ export default class {
                         <span class="item__location">${item.shop_location}</span>
                         <div class="item__relative" style="display: none">Tìm sản phẩm tương tự</div>
                     </div>
-                </div>
-                `
+                </div>`
             )
             .join("");
     }
@@ -209,6 +207,7 @@ export default class {
             ".bar-nav .pages"
         ).innerHTML = `<span class="highlight">${this.currentPage}</span>/${this.totalPages}`;
         this.search(apiKey, keywords, 30, page * 30).then(data => {
+            this.changeApiKey();
             this.renderResultList(data);
         });
     }
@@ -341,9 +340,10 @@ export default class {
                         else this.filterShipping.push(item.getAttribute("filterid"));
                         break;
                 }
-                this.search(this.listApiKey[this.indexApiKey], this.keywords).then(data =>
-                    this.renderResultList(data)
-                );
+                this.search(this.listApiKey[this.indexApiKey], this.keywords).then(data => {
+                    this.changeApiKey();
+                    this.renderResultList(data);
+                });
             });
         });
     }
@@ -365,9 +365,10 @@ export default class {
                     item.innerHTML += '<i class="fas fa-check highlight"></i>';
                 } else item.classList.add("active");
                 this.sortBy = dataSort;
-                this.search(this.listApiKey[this.indexApiKey], this.keywords).then(data =>
-                    this.renderResultList(data)
-                );
+                this.search(this.listApiKey[this.indexApiKey], this.keywords).then(data => {
+                    this.changeApiKey();
+                    this.renderResultList(data);
+                });
             });
         });
     }
@@ -379,84 +380,103 @@ export default class {
         err = err.message;
         if (err.includes("429")) setTimeout(() => this.main(), 2000);
         else if (err.includes("500")) {
-            this.indexApiKey += 1;
+            changeApiKey();
             setTimeout(() => this.main(), 500);
         }
     }
+    changeApiKey() {
+        this.indexApiKey < this.listApiKey.length - 1 ? this.indexApiKey++ : (this.indexApiKey = 0);
+    }
     main() {
         console.log(`search ${this.keywords}`);
-        let timeout = 1500;
+        let timeout = 0;
         document.querySelector(
             ".results-title .text"
         ).innerHTML = `Kết quả tìm kiếm cho từ khóa '<span class="highlight">${this.keywords}</span>'`;
-        this.filter(this.listApiKey[this.indexApiKey], this.keywords)
-            .then(data => {
-                this.renderFilterList(data);
-                document.querySelectorAll('.filters input[type="checkbox"]').forEach(input => {
-                    input.addEventListener("change", () => {});
-                });
-                this.getFilter("category");
-                this.getFilter("location");
-                this.getFilter("brand");
-                this.getFilter("shipping");
-                document.querySelector(`[group=category] .list-items`).style.height = "95px";
-                document.querySelector(`[group=location] .list-items`).style.height = "70px";
-                document.querySelector(`[group=brand] .list-items`).style.height = "70px";
-                document
-                    .querySelector(`[group=category] .list-more`)
-                    .addEventListener("click", () => {
-                        document.querySelector(`[group=category] .list-more`).style.display =
-                            "none";
-                        document.querySelector(`[group=category] .list-items`).style.height =
-                            "350px";
+        this.sleep(timeout).then(() => {
+            this.filter(this.listApiKey[this.indexApiKey], this.keywords)
+                .then(data => {
+                    this.renderFilterList(data);
+                    document.querySelectorAll('.filters input[type="checkbox"]').forEach(input => {
+                        input.addEventListener("change", () => {});
                     });
-                document
-                    .querySelector(`[group=location] .list-more`)
-                    .addEventListener("click", () => {
-                        document.querySelector(`[group=location] .list-more`).style.display =
-                            "none";
-                        document.querySelector(`[group=location] .list-items`).style.height =
-                            "510px";
-                    });
-                document.querySelector(`[group=brand] .list-more`).addEventListener("click", () => {
-                    document.querySelector(`[group=brand] .list-more`).style.display = "none";
-                    document.querySelector(`[group=brand] .list-items`).style.height = "510px";
-                });
-                this.sortItem();
-                return this.sleep(timeout);
-            })
-            .then(() =>
-                this.search(this.listApiKey[this.indexApiKey], this.keywords)
-                    .then(data => {
-                        this.renderResultList(data);
-                        document.querySelector(".nav.nav-prev").addEventListener("click", () => {
-                            if (this.currentPage == 1) {
-                                document.querySelector(".nav.nav-prev").classList.add("inactive");
-                                return;
-                            }
-                            this.currentPage--;
-                            this.changePage(
-                                this.listApiKey[this.indexApiKey],
-                                this.keywords,
-                                this.currentPage - 1
-                            );
+                    this.getFilter("category");
+                    this.getFilter("location");
+                    this.getFilter("brand");
+                    this.getFilter("shipping");
+                    document.querySelector(`[group=category] .list-items`).style.height = "95px";
+                    document.querySelector(`[group=location] .list-items`).style.height = "70px";
+                    document.querySelector(`[group=brand] .list-items`).style.height = "70px";
+                    document
+                        .querySelector(`[group=category] .list-more`)
+                        .addEventListener("click", () => {
+                            document.querySelector(`[group=category] .list-more`).style.display =
+                                "none";
+                            document.querySelector(`[group=category] .list-items`).style.height =
+                                "350px";
                         });
-                        document.querySelector(".nav.nav-next").addEventListener("click", () => {
-                            if (this.currentPage == this.totalPages) {
-                                document.querySelector(".nav.nav-next").classList.add("inactive");
-                                return;
-                            }
-                            this.currentPage++;
-                            this.changePage(
-                                this.listApiKey[this.indexApiKey],
-                                this.keywords,
-                                this.currentPage - 1
-                            );
+                    document
+                        .querySelector(`[group=location] .list-more`)
+                        .addEventListener("click", () => {
+                            document.querySelector(`[group=location] .list-more`).style.display =
+                                "none";
+                            document.querySelector(`[group=location] .list-items`).style.height =
+                                "510px";
                         });
-                        return this.sleep(timeout);
-                    })
-                    .catch(err => Promise.reject(err))
-            )
-            .catch(err => this.handleFetchErr(err));
+                    document
+                        .querySelector(`[group=brand] .list-more`)
+                        .addEventListener("click", () => {
+                            document.querySelector(`[group=brand] .list-more`).style.display =
+                                "none";
+                            document.querySelector(`[group=brand] .list-items`).style.height =
+                                "510px";
+                        });
+                    this.sortItem();
+                    this.changeApiKey();
+                    return this.sleep(timeout);
+                })
+                .then(() =>
+                    this.search(this.listApiKey[this.indexApiKey], this.keywords)
+                        .then(data => {
+                            this.renderResultList(data);
+                            document
+                                .querySelector(".nav.nav-prev")
+                                .addEventListener("click", () => {
+                                    if (this.currentPage == 1) {
+                                        document
+                                            .querySelector(".nav.nav-prev")
+                                            .classList.add("inactive");
+                                        return;
+                                    }
+                                    this.currentPage--;
+                                    this.changePage(
+                                        this.listApiKey[this.indexApiKey],
+                                        this.keywords,
+                                        this.currentPage - 1
+                                    );
+                                });
+                            document
+                                .querySelector(".nav.nav-next")
+                                .addEventListener("click", () => {
+                                    if (this.currentPage == this.totalPages) {
+                                        document
+                                            .querySelector(".nav.nav-next")
+                                            .classList.add("inactive");
+                                        return;
+                                    }
+                                    this.currentPage++;
+                                    this.changePage(
+                                        this.listApiKey[this.indexApiKey],
+                                        this.keywords,
+                                        this.currentPage - 1
+                                    );
+                                });
+                            this.changeApiKey();
+                            return this.sleep(timeout);
+                        })
+                        .catch(err => Promise.reject(err))
+                )
+                .catch(err => this.handleFetchErr(err));
+        });
     }
 }
