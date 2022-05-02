@@ -1,12 +1,12 @@
 import Base from "./Base.js";
 export default class extends Base {
-    constructor() {
-        super();
-        this.setTitle("Shopbe | Login");
-        this.setStyle("./static/style/login.css");
-    }
-    header() {
-        return `
+  constructor() {
+    super();
+    this.setTitle("Shopee | Login");
+    this.setStyle("./static/style/login.css");
+  }
+  header() {
+    return `
             <div class="header">
                 <div class="header__wrapper">
                     <div class="logo-wrapper">
@@ -17,9 +17,9 @@ export default class extends Base {
                 </div>
             </div>
         `;
-    }
-    container() {
-        return `
+  }
+  container() {
+    return `
             <div class="container">
                 <div class="container__login">
                     <div class="login-wrapper">
@@ -59,12 +59,12 @@ export default class extends Base {
                                 <div class="or">HOẶC</div>
                             </div>
                             <span class="note"
-                                >Bạn mới biết đến Shopbe? <a href="./signup" data-link><span>Đăng ký</span></a></span
+                                >Bạn mới biết đến Shopbe? <a href="/signup" data-link><span>Đăng ký</span></a></span
                             >
                         </div>
                     </div>
                 </div>
             </div>
         `;
-    }
+  }
 }

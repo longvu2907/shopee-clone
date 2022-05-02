@@ -1,13 +1,13 @@
 export default class {
-    constructor() {}
-    setTitle(title) {
-        document.title = title;
-    }
-    setStyle(url) {
-        document.querySelector("link.customize").href = url;
-    }
-    header() {
-        return `
+  constructor() {}
+  setTitle(title) {
+    document.title = title;
+  }
+  setStyle(url) {
+    document.querySelector("link.customize").href = url;
+  }
+  header() {
+    return `
             <div class="header">
                 <div class="header__wrapper">
                     <nav class="header__navbar header__navbar--guest">
@@ -177,21 +177,21 @@ export default class {
                 </div>
             </div>
             `;
-    }
-    container() {
-        return "";
-    }
-    footer() {
-        return `
+  }
+  container() {
+    return "";
+  }
+  footer() {
+    return `
             <div class="footer">
                 <div class="footer__about">
-                    <h1>SHOPBE - GÌ CŨNG CÓ, MUA HẾT Ở SHOPBE</h1>
-                    <img src="./static/images/shopee-icon.png" alt="" />
+                    <h3>SHOPEE - GÌ CŨNG CÓ, MUA HẾT Ở SHOPEE</h3>
+                    <p>Shopee - ứng dụng mua sắm trực tuyến thú vị, tin cậy, an toàn và miễn phí! Shopee là nền tảng giao dịch trực tuyến hàng đầu ở Đông Nam Á, Việt Nam,Singapore,Malaysia,Indonesia,Thái Lan, Philipin, Đài Loan và Brazil. Với sự đảm bảo của Shopee, bạn sẽ mua hàng trực tuyến an tâm và nhanh chóng hơn bao giờ hết!</p>
                 </div>
             </div>
         `;
-    }
-    async getHtml() {
-        return this.header() + this.container() + this.footer();
-    }
+  }
+  async getHtml() {
+    return this.header() + this.container() + this.footer();
+  }
 }

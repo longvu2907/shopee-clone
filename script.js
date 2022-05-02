@@ -1,4 +1,4 @@
-export default class {
+class SearchResult {
   constructor(params) {
     this.listApiKey = [
       "0e4475fd55msh9d3f485c76f18e1p1e3898jsn5c204e872e81",
@@ -160,15 +160,12 @@ export default class {
                         ${
                           data.discount == null
                             ? data.price_max == data.price_min
-                              ? "<span class='price-after-discount'>₫" +
-                                format(data.price) +
-                                "</span>"
-                              : "<span class='price-after-discount'>₫" +
+                              ? "₫" + format(data.price)
+                              : "₫" +
                                 format(data.price_min) +
                                 " - " +
                                 "₫" +
-                                format(data.price_max) +
-                                "</span>"
+                                format(data.price_max)
                             : data.price_max == data.price_min
                             ? '<span class="price-before-discount">₫' +
                               format(data.price_before_discount) +
@@ -203,10 +200,7 @@ export default class {
                                 </div>`
                             }
                         </div>
-                        ${
-                          data.tier_variations[0].name === ""
-                            ? ""
-                            : `<div class="models">
+                        <div class="models">
                             <span class="title">${
                               data.tier_variations[0].name
                             }</span>
@@ -222,8 +216,7 @@ export default class {
                                   )
                                   .join("")}
                             </div>
-                        </div>`
-                        }
+                        </div>
                         <div class="quantity">
                             <span class="title">Số Lượng</span>
                             <div class="add-product">
@@ -256,19 +249,15 @@ export default class {
                   .join("")}
 							</div>
 						</div>
-						${
-              !Array.isArray(data.attributes)
-                ? ""
-                : data.attributes
-                    .map(
-                      attribute => `
+						${data.attributes
+              .map(
+                attribute => `
 						<div class='wrapper'>
 							<span class='name'>${attribute.name}</span>
 							<span class='value'>${attribute.value}</span>
 						</div>`,
-                    )
-                    .join("")
-            }
+              )
+              .join("")}
 						<div class='wrapper'>
 							<span class='name'>Kho hàng</span>
 							<span class='value'>${data.normal_stock}</span>
@@ -363,12 +352,14 @@ export default class {
             }
           }),
       );
-      document.querySelectorAll(".models-list .model").forEach(child =>
-        child.addEventListener("mouseover", () => {
-          if (child.getAttribute("img-src") != "undefined")
-            mainImage.src = child.getAttribute("img-src");
-        }),
-      );
+      document
+        .querySelectorAll(".models-list .model")
+        .forEach(child =>
+          child.addEventListener(
+            "mouseover",
+            () => (mainImage.src = child.getAttribute("img-src")),
+          ),
+        );
       let quantityInput = document.querySelector(".add-product input");
       document.querySelectorAll(".models-list .model").forEach(
         child =>
@@ -452,3 +443,5 @@ export default class {
     });
   }
 }
+
+new SearchResult("49280747&2613714946").main();

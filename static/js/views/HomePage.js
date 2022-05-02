@@ -1,12 +1,12 @@
 import Base from "./Base.js";
 export default class extends Base {
-    constructor() {
-        super();
-        this.setTitle("Shopbe | Home Page");
-        this.setStyle("");
-    }
-    container() {
-        return `
+  constructor() {
+    super();
+    this.setTitle("Shopee | Home Page");
+    this.setStyle("");
+  }
+  container() {
+    return `
             <div class="container">
                 <div class="container__homepage">
                     <div class="homepage__banner">
@@ -198,5 +198,5 @@ export default class extends Base {
                 </div>
             </div>
         `;
-    }
+  }
 }
