@@ -552,9 +552,6 @@ export default class {
     console.log(err);
     var rerun;
     err = err.message;
-    // clearTimeout(rerun);
-    // this.changeApiKey();
-    // rerun = setTimeout(() => this.main(), 3000);
     if (err.includes("429")) {
       clearTimeout(rerun);
       this.changeApiKey();
@@ -566,7 +563,7 @@ export default class {
     } else if (err.includes("403")) {
       this.changeApiKey();
       clearTimeout(rerun);
-      rerun = setTimeout(() => this.main(), 3000);
+      rerun = setTimeout(() => this.main(), 500);
     }
   }
   changeApiKey() {
