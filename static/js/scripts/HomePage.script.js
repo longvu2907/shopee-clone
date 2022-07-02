@@ -496,7 +496,7 @@ export default class {
     };
     return axios.request(options).then(response => {
       if (response.status != 200) return Promise.reject(response.status);
-      else return Promise.resolve(response.data.data.items);
+      else return Promise.resolve(response.data.data?.items);
     });
   }
   renderProductList(apiKey, categoryId, limit = 36, offset = 0) {
